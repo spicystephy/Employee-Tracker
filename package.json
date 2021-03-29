@@ -1,0 +1,27 @@
+{
+  "name": "Employee-Tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "inquirer": "^8.0.0",
+    "jest": "^26.6.3",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spicystephy/Employee-Tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spicystephy/Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/spicystephy/Employee-Tracker#readme"
+}
