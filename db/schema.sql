@@ -6,10 +6,26 @@ USE employeeTrackerDB;
 
 CREATE TABLE employees(
     id INT NOT NULL AUTO_INCREMENT,
-    employeeMgmt VARCHAR(45) NULL,
-    employeeRole VARCHAR(45) NULL,
-    employeeDept VARCHAR(45) NULL,
-    allRoles VARCHAR(45) NULL,
-    budgetTotal VARCHAR(45) NULL,
+    first_name VARCHAR(30) NULL,
+    last_name VARCHAR(30) NULL,
+    manager_id INT NULL,
+    role_id INT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE roles(
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(30) NULL,
+    salary DECIMAL NULL,
+    department_id INT NULL
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE departments(
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(30) NULL,
+    budget_total DECIMAL NULL,
+    PRIMARY KEY (id)
+);
+
+    
