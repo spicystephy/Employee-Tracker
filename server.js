@@ -39,6 +39,7 @@ function initialPrompt() {
         "Add Department",
         "Remove Department",
         "View Utilized Budget Total",
+        "Exit",
       ],
     },
   ])
@@ -96,11 +97,12 @@ function initialPrompt() {
       viewBudgetTotal();
       break;
 
-      default:
-        console.log("");
+      case "Exit":
+      connection.end();
+      break;
     }
-  })
-}
+  });
+};
 //--------View functions---------
 //--------View All Employees---------
 function viewAllEmployees(){
@@ -152,8 +154,8 @@ function updateEmployeeRole(){
         .then(data => {
             connection.query("UPDATE employees SET role_id = ? WHERE  id = ?", [data.updateRole, data.employeeNumber])
         })
-    })
 }
+
 //-------Update Employee's Manager--------
 function updateEmployeeMgmt(){
     connection.query("SELECT id, manager_id FROM employees") 
@@ -172,10 +174,9 @@ function updateEmployeeMgmt(){
             },
         ])
         .then(data => {
-            connection.query("UPDATE employees SET manager_id = ? WHERE  id = ?", [data.updateRole, data.employeeNumber])
+            connection.query("UPDATE employees SET manager_id = ? WHERE  id = ?", [data.updateManager, data.employeeNumber])
         })
-    })
-};
+}
 
 
 //-------Add functions--------
@@ -215,7 +216,6 @@ function addEmployee(){
         });
         console.log("Data inserted successfully!");
         initialPrompt();
-
     })
 }
 
@@ -243,6 +243,7 @@ function addRole(){
     initialPrompt();
 })
 };
+
 function addDept(){
     connection.query("SELECT * FROM departments")
     inquirer.prompt([
