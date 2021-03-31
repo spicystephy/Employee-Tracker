@@ -10,15 +10,18 @@ CREATE TABLE employees(
     last_name VARCHAR(30) NULL,
     manager_id INT NULL,
     role_id INT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (role_id) REFERENCES roles(id),
+    FOREIGN KEY (department_id) REFERENCES departments(id)
 );
 
 CREATE TABLE roles(
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NULL,
     salary DECIMAL NULL,
-    department_id INT NULL
-    PRIMARY KEY (id)
+    department_id INT NULL,
+    PRIMARY KEY (id),
+    FOREIGN Key (department_id) REFERENCES departments(id)
 );
 
 CREATE TABLE departments(
