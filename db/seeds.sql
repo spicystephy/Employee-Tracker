@@ -1,3 +1,5 @@
+-- DROP DATABASE IF EXISTS employeeTrackerDB;
+-- CREATE DATABASE employeeTrackerDB;
 USE employeeTrackerDB;
 
 INSERT INTO departments (name, budget_total)
@@ -18,11 +20,11 @@ INSERT INTO employees (first_name, last_name, manager_id, role_id)
 VALUES 
 ("George Michael", "Bluth", 2, 1),
 ("Michael", "Bluth", 1, 2),
-("George", "Bluth", null, 5),
-("Lucille", "Bluth", null, 3),
-("Gob", "Bluth", null, 4),
+("George", "Bluth", 0, 5),
+("Lucille", "Bluth", 0, 3),
+("Gob", "Bluth", 0, 4),
 ("Buster", "Bluth", 2, 6),
 ("Maeby", "Funke", 1, 1),
-("Tobias", "Funke", null, 6),
+("Tobias", "Funke", 0, 6),
 ("Lindsay", "Funke", 2, 3);
 
