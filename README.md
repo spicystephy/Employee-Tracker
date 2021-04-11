@@ -21,7 +21,8 @@ Dependencies required are mysql and inquirer.
 
 
 ## Usage
-After dependencies have been loaded and database seeded, use integrated terminal, run node server.js to begin working prompts.
+After dependencies have been loaded and database seeded, use integrated terminal, run node server.js to begin working prompts.\
+*Usage video coming soon.*
 
 
 ## Questions
