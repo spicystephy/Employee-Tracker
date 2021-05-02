@@ -149,10 +149,13 @@ function viewAllDepartments() {
     initialPrompt();
   });
 }
+
 //-------Update functions--------
 //-------Update Employee's Role/title--------
 async function updateEmployeeRole() {
-  const employeeArr = await connection.query("SELECT id, first_name, last_name role_id FROM employees");
+  const employeeArr = await connection.query(
+    "SELECT id, first_name, last_name role_id FROM employees"
+  );
   const rolesArr = await connection.query("SELECT title, id from roles");
   inquirer
     .prompt([
@@ -166,7 +169,7 @@ async function updateEmployeeRole() {
         type: "rawlist",
         name: "updateRole",
         message: "What is the employee's new title?",
-        choices: rolesArr.map((role) => role.title)
+        choices: rolesArr.map((role) => role.title),
       },
     ])
     .then((data) => {
@@ -178,15 +181,17 @@ async function updateEmployeeRole() {
 }
 
 //-------Update Employee's Manager--------
-function updateEmployeeMgmt() {
-  connection.query("SELECT id, manager_id FROM employees");
+async function updateEmployeeMgmt() {
+  const empArr = await connection.query("SELECT * FROM employees");
+  // const manArr = await connection.query("SELECT id from ")
+  // viewEmployeeMgmt();
   inquirer
     .prompt([
       {
         type: "rawlist",
         name: "employeeNumber",
         message: "Select employee to be updated by their ID.",
-        choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+        choices: [empArr],
       },
       {
         type: "rawlist",
@@ -196,6 +201,7 @@ function updateEmployeeMgmt() {
       },
     ])
     .then((data) => {
+      // const
       connection.query("UPDATE employees SET manager_id = ? WHERE  id = ?", [
         data.updateManager,
         data.employeeNumber,
@@ -205,47 +211,40 @@ function updateEmployeeMgmt() {
 
 //-------Add functions--------
 async function addEmployee() {
-  const rolesArr = await connection.query("SELECT title, id FROM roles");
-  // const managerArr = await connection.query("SELECT manager_id, id FROM employees")
-  // console.log(managerArr);
-  const { firstName, lastName, manager_id, role_id } = inquirer.prompt([
-    {
-      type: "input",
-      name: "firstName",
-      message: "What is the employee's first name?",
-    },
-    {
-      type: "input",
-      name: "lastName",
-      message: "What is the employee's last name?",
-    },
-    // {
-    //   type: "list",
-    //   name: "manager_id",
-    //   message: "What is their manager's ID?",
-    //   choices: managerArr.map((manager) => manager.manager_id ),
-    // },
-    {
-      type: "list",
-      name: "role_id",
-      message: "What is their role?",
-      choices: rolesArr.map((role) => role.title),
-    },
-  ]);
-  await connection
-    .query("INSERT INTO employees SET ?", {
-      first_name: firstName,
-      last_name: lastName,
-      // manager_id: managerArr.filter((manager) => manager_id === manager.title) [0].id,
-      role_id: rolesArr.filter((role) => role_id === role.title)[0].id,
-    })
-    .catch((err) => console.log(err));
-  console.log("Data inserted successfully!");
-  viewAllEmployees();
+  const rolesArr = await connection.query("SELECT id, title FROM roles");
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "What is the employee's first name?",
+      },
+      {
+        type: "input",
+        name: "lastName",
+        message: "What is the employee's last name?",
+      },
+      {
+        type: "list",
+        name: "roleId",
+        message: "What is their role?",
+        choices: rolesArr.map((roles) => roles.title),
+      },
+    ])
+    .then((data) => {
+      connection.query("INSERT INTO employees SET ?", {
+        first_name: data.firstName,
+        last_name: data.lastName,
+        // role_id: data.rolesArr.filter((roles) => roleId === roles.title)[0].id,
+        role_id: data.rolesArr.filter(roles.title)[0].id,
+      });
+      console.log("Data inserted successfully!");
+      viewAllEmployees();
+    });
 }
 
-function addRole() {
-  connection.query("SELECT * FROM roles");
+async function addRole() {
+  const deptArr = await connection.query("SELECT id, name FROM departments");
   inquirer
     .prompt([
       {
@@ -259,16 +258,18 @@ function addRole() {
         message: "What is the salary for this title?",
       },
       {
-        type: "raw list",
+        type: "list",
         name: "dept",
         message: "Which department does this role reside in?",
-        choices: [],
+        choices: deptArr.map((departments) => departments.name),
       },
     ])
     .then((data) => {
       connection.query("INSERT INTO roles SET ?", {
         title: data.newTitle,
         salary: data.salary,
+        // department_id: data.dept,
+        department_id: data.deptArr.filter((departments) => dept === departments.name)[0].id,
       });
       console.log("Data inserted successfully!");
       viewAllRoles();
